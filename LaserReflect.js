@@ -2,6 +2,8 @@
 
 var gunObj: Transform;
 var RaySourceObj : GameObject;
+var rayTargetObj : GameObject;
+var rayTargetLight : Light;
 var prefabToSpawn : GameObject;
 var prefabToSpawn2 : GameObject;
 var prefabToSpawn3 : GameObject;
@@ -12,7 +14,7 @@ var rot : Quaternion;
 var pos : Vector3;
 
 function Start () {
-
+	rayTargetLight = rayTargetObj.transform.FindChild("Mesh").light;
 }
 
 function Update () {
@@ -26,6 +28,9 @@ function Update () {
 		var fwd : Vector3 = rayStartTrn.TransformDirection (Vector3.forward);
 		
 		var layerMask = ~(1 << Globals.myPlayerLayer.value);
+		
+		pos = Vector3.zero;
+		
 		if (Physics.Raycast(rayStartPos, fwd, hit, Globals.hitDistance, layerMask)) {			
 			// Find the line from the gun to the point that was clicked.
 			var incomingVec = hit.point - gunObj.position;
@@ -39,11 +44,19 @@ function Update () {
 
 			rot = Quaternion.FromToRotation(Vector3.down, hit.normal);
 			pos = hit.point;
+			
+			if (pos != Vector3.zero) {
+				rayTargetObj.SetActive(true);
+				rayTargetObj.transform.position = pos;
+			}
+						
 			if (readyToSpawn) {
 				readyToSpawn = false;
 				InstantiateHitObject(prefabToSpawn, pos, rot);
 			}
 		}
+		
+		if (pos == Vector3.zero) {rayTargetObj.SetActive(false);rayTargetLight.range = .5;}	
 	//}
 }
 
@@ -60,6 +73,10 @@ function InstantiateHitObject(prefabToSpawn : GameObject, pos: Vector3, rot : Qu
     var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
 
 	Instantiate(prefabToUse, pos, randomRotation);
+	//rayTargetLight.color = Color.white;
+	rayTargetLight.range = .5;
 	yield WaitForSeconds(spawnTimeout);
+	//rayTargetLight.color = Color.magenta;
+	rayTargetLight.range = 2;
 	readyToSpawn = true;
 }
