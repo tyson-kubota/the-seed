@@ -4,13 +4,19 @@ var gunObj: Transform;
 var RiftMenuCam2 : GameObject;
 var RiftSourceObj : GameObject;
 var prefabToSpawn : GameObject;
+var prefabToSpawn2 : GameObject;
+var prefabToSpawn3 : GameObject;
+var readyToSpawn : boolean = true;
+var spawnTimeout : float = .25f;
+
+var rot : Quaternion;
+var pos : Vector3;
 
 function Start () {
 
 }
 
 function Update () {
-	if (Input.GetMouseButton(0)) {
 	//if (Input.GetButton("Fire1")) {
 		//Debug.Log("Pressed left click.");
 		
@@ -19,8 +25,9 @@ function Update () {
 		var rayStartTrn : Transform = RiftSourceObj.transform;
 		var rayStartPos : Vector3 = rayStartTrn.position;
 		var fwd : Vector3 = rayStartTrn.TransformDirection (Vector3.forward);
-
-		if (Physics.Raycast(rayStartPos, fwd, hit)) {			
+		
+		var layerMask = ~(1 << Globals.myPlayerLayer.value);
+		if (Physics.Raycast(rayStartPos, fwd, hit, Globals.hitDistance, layerMask)) {			
 			// Find the line from the gun to the point that was clicked.
 			var incomingVec = hit.point - gunObj.position;
 			
@@ -31,10 +38,29 @@ function Update () {
 			Debug.DrawLine(gunObj.position, hit.point, Color.red);
 			Debug.DrawRay(hit.point, reflectVec, Color.green, 1.0f);
 
-			var rot : Quaternion = Quaternion.FromToRotation(Vector3.down, hit.normal);
-			var pos : Vector3 = hit.point;
-
-			Instantiate(prefabToSpawn, pos, rot);
+			rot = Quaternion.FromToRotation(Vector3.down, hit.normal);
+			pos = hit.point;
+			if (readyToSpawn) {
+				readyToSpawn = false;
+				InstantiateHitObject(prefabToSpawn, pos, rot);
+			}
 		}
-	}
+	//}
+}
+
+function InstantiateHitObject(prefabToSpawn : GameObject, pos: Vector3, rot : Quaternion) {
+
+	var prefabToUse : GameObject;
+	var prefabSpawnID : int = Random.Range(0,6); 
+	
+	if (prefabSpawnID <= 2) {prefabToUse = prefabToSpawn;}
+	else if (prefabSpawnID <= 4) {prefabToUse = prefabToSpawn2;}
+	else {prefabToUse = prefabToSpawn3;}
+
+	var randomRotY : int = Random.Range(0, 160);
+    var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
+
+	Instantiate(prefabToUse, pos, randomRotation);
+	yield WaitForSeconds(spawnTimeout);
+	readyToSpawn = true;
 }
