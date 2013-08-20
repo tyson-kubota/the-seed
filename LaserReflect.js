@@ -1,8 +1,7 @@
 ﻿#pragma strict
 
 var gunObj: Transform;
-var RiftMenuCam2 : GameObject;
-var RiftSourceObj : GameObject;
+var RaySourceObj : GameObject;
 var prefabToSpawn : GameObject;
 var prefabToSpawn2 : GameObject;
 var prefabToSpawn3 : GameObject;
@@ -22,7 +21,7 @@ function Update () {
 		
 		var hit: RaycastHit;
 		
-		var rayStartTrn : Transform = RiftSourceObj.transform;
+		var rayStartTrn : Transform = RaySourceObj.transform;
 		var rayStartPos : Vector3 = rayStartTrn.position;
 		var fwd : Vector3 = rayStartTrn.TransformDirection (Vector3.forward);
 		
