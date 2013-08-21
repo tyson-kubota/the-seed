@@ -19,6 +19,7 @@ function Start () {
 
 function Update () {
 	//if (Input.GetButton("Fire1")) {
+	if (Globals.introComplete) {
 		//Debug.Log("Pressed left click.");
 		
 		var hit: RaycastHit;
@@ -51,13 +52,16 @@ function Update () {
 			}
 						
 			if (readyToSpawn) {
+			if (hit.collider.gameObject.CompareTag ("Vine") || hit.collider.gameObject.CompareTag ("Seed") || hit.collider.gameObject.CompareTag ("Player")) {return;}
+			else {
 				readyToSpawn = false;
 				InstantiateHitObject(prefabToSpawn, pos, rot);
+				}
 			}
 		}
 		
 		if (pos == Vector3.zero) {rayTargetObj.SetActive(false);rayTargetLight.range = .5;}	
-	//}
+	}
 }
 
 function InstantiateHitObject(prefabToSpawn : GameObject, pos: Vector3, rot : Quaternion) {

@@ -5,11 +5,15 @@ static var initFogColor : Color;
 static var initAmbientLight : Color;
 static var hitDistance : float = 20.0f;
 static var myPlayerLayer : LayerMask = 11;
+static var introComplete : boolean = false;
 
 var normalPlayerCamera : GameObject;
 var riftPlayerCamera : GameObject;
 var riftPlayer : GameObject;
 var normalPlayer : GameObject;
+
+var startingFogColor : Color;
+var startingFogEndDist : float = 0;
 
 function Start () {
 	initFogEndDist = RenderSettings.fogEndDistance;
@@ -27,8 +31,27 @@ function Start () {
 //    	normalPlayer.SetActive(true);
 //    	normalPlayerCamera.SetActive(true);
 //    }
+
+	yield FadeFogIn(8);
+	introComplete = true;
 }
 
 function Update () {
 
+}
+
+function FadeFogIn (timer : float) {
+    var start = startingFogColor;
+    var end = initFogColor;
+    var startDist = startingFogEndDist;
+    var endDist = initFogEndDist;
+    var i = 0.0;
+    var step = 1.0/timer;
+
+    while (i <= 1.0) {
+        i += step * Time.deltaTime;
+        RenderSettings.fogColor = Color.Lerp(start, end, i);
+        RenderSettings.fogEndDistance = Mathf.Lerp(startDist, endDist, i);
+        yield;
+    }
 }
