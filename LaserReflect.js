@@ -9,12 +9,18 @@ var prefabToSpawn2 : GameObject;
 var prefabToSpawn3 : GameObject;
 var readyToSpawn : boolean = true;
 var spawnTimeout : float = .25f;
+var layerMask1 : int;
+var layerMask2 : int;
+var finalMask : int;
 
 var rot : Quaternion;
 var pos : Vector3;
 
 function Start () {
 	rayTargetLight = rayTargetObj.transform.FindChild("Mesh").light;
+	layerMask1 = Globals.myPlayerLayer.value;
+	layerMask2 = Globals.laserLayer.value;
+	finalMask = ~((1 << layerMask1) | (1 << layerMask2));
 }
 
 function Update () {
@@ -28,11 +34,10 @@ function Update () {
 		var rayStartPos : Vector3 = rayStartTrn.position;
 		var fwd : Vector3 = rayStartTrn.TransformDirection (Vector3.forward);
 		
-		var layerMask = ~(1 << Globals.myPlayerLayer.value);
 		
 		pos = Vector3.zero;
 		
-		if (Physics.Raycast(rayStartPos, fwd, hit, Globals.hitDistance, layerMask)) {			
+		if (Physics.Raycast(rayStartPos, fwd, hit, Globals.hitDistance, finalMask)) {			
 			// Find the line from the gun to the point that was clicked.
 			var incomingVec = hit.point - gunObj.position;
 			

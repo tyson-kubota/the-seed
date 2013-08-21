@@ -5,6 +5,7 @@ static var initFogColor : Color;
 static var initAmbientLight : Color;
 static var hitDistance : float = 20.0f;
 static var myPlayerLayer : LayerMask = 11;
+static var laserLayer : LayerMask = 13;
 static var introComplete : boolean = false;
 
 var normalPlayerCamera : GameObject;
