@@ -7,6 +7,10 @@ var rayTargetLight : Light;
 var prefabToSpawn : GameObject;
 var prefabToSpawn2 : GameObject;
 var prefabToSpawn3 : GameObject;
+
+var prefabToSpawnCrystal1 : GameObject;
+var prefabToSpawnCrystal2 : GameObject;
+var prefabToSpawnCrystal3 : GameObject;
 var readyToSpawn : boolean = true;
 var spawnTimeout : float = .25f;
 var layerMask1 : int;
@@ -57,11 +61,12 @@ function Update () {
 			}
 						
 			if (readyToSpawn) {
-			if (hit.collider.gameObject.CompareTag ("Vine") || hit.collider.gameObject.CompareTag ("Seed") || hit.collider.gameObject.CompareTag ("Player")) {
+			if (hit.collider.gameObject.CompareTag ("Crystal") || hit.collider.gameObject.CompareTag ("Vine") || hit.collider.gameObject.CompareTag ("Seed") || hit.collider.gameObject.CompareTag ("Player")) {
 				return;
 			}
 			if (hit.collider.gameObject.CompareTag ("Water")) {
-				return;
+				readyToSpawn = false;
+				InstantiateHitCrystal(prefabToSpawnCrystal1, pos, rot);
 				// put water sheet/slab spawn here
 				}
 			else {
@@ -91,6 +96,27 @@ function InstantiateHitObject(prefabToSpawn : GameObject, pos: Vector3, rot : Qu
 	//rayTargetLight.color = Color.white;
 	rayTargetLight.range = .5;
 	yield WaitForSeconds(spawnTimeout);
+	//rayTargetLight.color = Color.magenta;
+	rayTargetLight.range = 2;
+	readyToSpawn = true;
+}
+
+function InstantiateHitCrystal(prefabToSpawn : GameObject, pos: Vector3, rot : Quaternion) {
+
+	var prefabToUse : GameObject;
+	var prefabSpawnID : int = Random.Range(0,7); 
+	
+	if (prefabSpawnID <= 2) {prefabToUse = prefabToSpawnCrystal1;}
+	else if (prefabSpawnID <= 4) {prefabToUse = prefabToSpawnCrystal2;}
+	else {prefabToUse = prefabToSpawnCrystal3;}
+
+	var randomRotY : int = Random.Range(0, 160);
+    var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
+
+	Instantiate(prefabToUse, pos, randomRotation);
+	//rayTargetLight.color = Color.white;
+	rayTargetLight.range = .5;
+	yield WaitForSeconds(spawnTimeout/2);
 	//rayTargetLight.color = Color.magenta;
 	rayTargetLight.range = 2;
 	readyToSpawn = true;
