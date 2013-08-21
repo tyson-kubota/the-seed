@@ -3,6 +3,7 @@
 var prefabToSpawn : GameObject;
 var prefabToSpawnAlt : GameObject;
 var prefabPod : GameObject;
+var prefabToEnd : GameObject;
 
 var originTransform : Transform; 
 var randomizePrefab : boolean = false;
@@ -32,7 +33,12 @@ function Start () {
      	spawnedPrefabT.transform.parent = originTransform;
      	spawnedPrefabT.transform.localPosition = randomPosition;
     }
-    
+	else {
+		var spawnedPrefabEndT : GameObject = Instantiate(prefabToEnd, randomPosition, randomRotation);
+     	spawnedPrefabEndT.transform.parent = originTransform;
+     	spawnedPrefabEndT.transform.localPosition = randomPosition;	
+	}
+	    
     if (spawnPods) {
 //        var shouldSpawnPod : int = Random.Range(0,5);
 //        if (shouldSpawnPod == 1) {
