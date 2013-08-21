@@ -6,6 +6,7 @@ static var initAmbientLight : Color;
 static var hitDistance : float = 20.0f;
 static var myPlayerLayer : LayerMask = 11;
 static var laserLayer : LayerMask = 13;
+static var waterLayer : LayerMask;
 static var introComplete : boolean = false;
 
 var normalPlayerCamera : GameObject;
@@ -21,6 +22,8 @@ function Start () {
 	initFogColor = RenderSettings.fogColor;
 	initAmbientLight = RenderSettings.ambientLight;
 	myPlayerLayer = LayerMask.NameToLayer("MyPlayerLayer");
+	laserLayer = LayerMask.NameToLayer("LaserBlast");
+	waterLayer = LayerMask.NameToLayer("Water");
 	
 	if (OVRDevice.SensorCount > 0) {
     	normalPlayer.SetActive(false);

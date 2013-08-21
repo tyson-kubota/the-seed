@@ -20,7 +20,7 @@ function Start () {
 	rayTargetLight = rayTargetObj.transform.FindChild("Mesh").light;
 	layerMask1 = Globals.myPlayerLayer.value;
 	layerMask2 = Globals.laserLayer.value;
-	finalMask = ~((1 << layerMask1) | (1 << layerMask2));
+	finalMask = ~((1 << Globals.myPlayerLayer.value) | (1 << Globals.laserLayer.value));
 }
 
 function Update () {
@@ -57,7 +57,13 @@ function Update () {
 			}
 						
 			if (readyToSpawn) {
-			if (hit.collider.gameObject.CompareTag ("Vine") || hit.collider.gameObject.CompareTag ("Seed") || hit.collider.gameObject.CompareTag ("Player")) {return;}
+			if (hit.collider.gameObject.CompareTag ("Vine") || hit.collider.gameObject.CompareTag ("Seed") || hit.collider.gameObject.CompareTag ("Player")) {
+				return;
+			}
+			if (hit.collider.gameObject.CompareTag ("Water")) {
+				return;
+				// put water sheet/slab spawn here
+				}
 			else {
 				readyToSpawn = false;
 				InstantiateHitObject(prefabToSpawn, pos, rot);
