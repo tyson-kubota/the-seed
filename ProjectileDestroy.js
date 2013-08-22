@@ -45,6 +45,9 @@ function OnCollisionEnter (collision : Collision) {
 	
   }
   
+  if (collision.gameObject.CompareTag ("Crystal")) {
+  	Destroy(collision.gameObject, 0);
+  }
 // but if one fireball hits another, destroy immediately.
   if (this.gameObject.layer == 17 && collision.gameObject.CompareTag ("Death")) {
 	Destroy(gameObject, 0);

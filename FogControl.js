@@ -40,6 +40,7 @@ function FadeFogDist (timer : float, fadeType : FadeDir) {
 	}
 
     while (i <= 1.0) {
+    	if (Globals.doneWaiting == true) {break;}
         i += step * Time.deltaTime;
         RenderSettings.fogEndDistance = Mathf.Lerp(start, end, i);
         yield;

@@ -1,5 +1,6 @@
 ﻿#pragma strict
 static var doneWaiting : boolean = true;
+static var isUnderwater : boolean = false;
 static var initFogEndDist : float;
 static var initFogColor : Color;
 static var initAmbientLight : Color;
@@ -53,6 +54,7 @@ function FadeFogIn (timer : float) {
     var step = 1.0/timer;
 
     while (i <= 1.0) {
+    	if (isUnderwater == true) {break;}
         i += step * Time.deltaTime;
         RenderSettings.fogColor = Color.Lerp(start, end, i);
         RenderSettings.fogEndDistance = Mathf.Lerp(startDist, endDist, i);
