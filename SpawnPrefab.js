@@ -27,6 +27,7 @@ function OnCollisionEnter (collision : Collision) {
 	if (collision.gameObject.CompareTag ("Laser") && doneWaiting == true) {
 		Destroy(collision.gameObject);
 		SpawnPrefabGrass(collision);
+		//Debug.Log("you shot the terrain");
 	}
 
 	if (collision.gameObject.CompareTag ("Seed") && doneWaiting == true) {
