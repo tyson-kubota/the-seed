@@ -25,7 +25,7 @@ function Update ()
          nextFire = Time.time + fireRate;
          //Instantiate(projectilePrefab2, fp1.transform.position, fp1.transform.rotation);
          //disabling freeze ray mechanic - TK
-         Instantiate(projectilePrefab2, fp1.transform.position, fp1.transform.rotation);
+         Instantiate(projectilePrefab, fp1.transform.position, fp1.transform.rotation);
  
        }
 
