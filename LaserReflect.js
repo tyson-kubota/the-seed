@@ -148,7 +148,7 @@ function InstantiateHitCave(prefabToSpawn : GameObject, pos: Vector3, rot : Quat
 
 	Instantiate(prefabToUse, pos, randomRotation);
 	rayTargetLight.range = .5;
-	yield WaitForSeconds(spawnTimeout);
+	yield WaitForSeconds(spawnTimeout/4);
 	rayTargetLight.range = 2;
 	readyToSpawn = true;
 }
