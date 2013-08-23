@@ -7,6 +7,9 @@ var ProjectileName : String = "Generic";
 var myObjectHolder : GameObject;
 var myObject : GameObject;
 
+var shotRenderer : MeshRenderer;
+var audioDing : AudioSource;
+
 function Start () {
   //myObjectHolder = transform.parent.gameObject;
 	myObject = gameObject;
@@ -19,6 +22,12 @@ function OnCollisionEnter (collision : Collision) {
   if (collision.gameObject.rigidbody) {
   	collision.gameObject.rigidbody.useGravity = true;
   	collision.gameObject.rigidbody.isKinematic = false;
+  }
+  
+  if (collision.gameObject.CompareTag ("Terrain")) {
+	if (audioDing) {audioDing.Play();}
+	if (shotRenderer) {shotRenderer.enabled = false;}
+	Destroy(myObject, 1);
   }
   
   if (collision.gameObject.CompareTag ("Block")) {
