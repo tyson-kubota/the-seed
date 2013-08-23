@@ -97,3 +97,23 @@ function OnCollisionEnter (collision : Collision) {
 
 	//else {Destroy(collision.gameObject);}	
 }
+
+function OnTriggerEnter (other : Collider) {
+
+	if (other.gameObject && other.gameObject.CompareTag ("Player")) {
+		if (Globals.doneWaiting == false) {
+			Destroy(other.gameObject);
+			if (audioDing) {audioDing.Play();}
+		}
+		else {
+			if (audioHit) {audioHit.Play();}
+			Globals.doneWaiting = false;
+			Destroy(other.gameObject);
+			FadeFogColor(FogColorFadeTime, FadeDir.In);
+			yield FadeFogDist(FogDistFadeTime, FadeDir.In);
+			FadeFogColor(FogColorFadeTime/2, FadeDir.Out);
+			yield FadeFogDist(FogDistFadeTime/2, FadeDir.Out);
+			Globals.doneWaiting = true;
+		}
+	}
+}
