@@ -11,6 +11,11 @@ var prefabToSpawnGrass3 : GameObject;
 var prefabToSpawnCrystal1 : GameObject;
 var prefabToSpawnCrystal2 : GameObject;
 var prefabToSpawnCrystal3 : GameObject;
+
+var prefabToSpawnCave1 : GameObject;
+var prefabToSpawnCave2 : GameObject;
+var prefabToSpawnCave3 : GameObject;
+
 var readyToSpawn : boolean = true;
 var spawnTimeout : float = .25f;
 var layerMask1 : int;
@@ -70,13 +75,16 @@ function Update () {
 				// put water sheet/slab spawn here
 				}
 			else if (hit.collider.gameObject.CompareTag ("Cave")) {
-				//readyToSpawn = false;
-				//InstantiateHitObject(prefabToSpawnGrass1, pos, rot);
+				readyToSpawn = false;
+				InstantiateHitCave(prefabToSpawnCave1, pos, rot);
 				}				
 			else if (hit.collider.gameObject.CompareTag ("Terrain")) {
 				readyToSpawn = false;
 				InstantiateHitObject(prefabToSpawnGrass1, pos, rot);
 				}
+//			else {
+//				readyToSpawn = true;	
+//				}	
 			}
 		}
 		
@@ -122,6 +130,25 @@ function InstantiateHitCrystal(prefabToSpawn : GameObject, pos: Vector3, rot : Q
 	rayTargetLight.range = .5;
 	yield WaitForSeconds(spawnTimeout/2);
 	//rayTargetLight.color = Color.magenta;
+	rayTargetLight.range = 2;
+	readyToSpawn = true;
+}
+
+function InstantiateHitCave(prefabToSpawn : GameObject, pos: Vector3, rot : Quaternion) {
+
+	var prefabToUse : GameObject;
+	var prefabSpawnID : int = Random.Range(0,7); 
+	
+	if (prefabSpawnID <= 2) {prefabToUse = prefabToSpawnCave1;}
+	else if (prefabSpawnID <= 4) {prefabToUse = prefabToSpawnCave2;}
+	else {prefabToUse = prefabToSpawnCave3;}
+
+	var randomRotY : int = Random.Range(0, 160);
+    var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
+
+	Instantiate(prefabToUse, pos, randomRotation);
+	rayTargetLight.range = .5;
+	yield WaitForSeconds(spawnTimeout);
 	rayTargetLight.range = 2;
 	readyToSpawn = true;
 }
