@@ -5,6 +5,7 @@ var originTransform : Transform;
 var destroyOnSpawn : boolean = false;
 var doneWaiting : boolean = true;
 var permitMultipleSpawns : boolean = false;
+var myLight : Light;
 
 var audioHit : AudioSource;
 
@@ -17,6 +18,7 @@ function OnCollisionEnter (collision : Collision) {
 	if (collision.gameObject.CompareTag ("Laser") && doneWaiting == true) {
 		Destroy(collision.gameObject);
 		SpawnPrefab();
+		if (myLight) {myLight.range = (myLight.range * 2); myLight.intensity = (myLight.intensity * 2);}
 	}
 
 }

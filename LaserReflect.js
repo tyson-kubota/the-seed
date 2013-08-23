@@ -81,6 +81,7 @@ function Update () {
 				readyToSpawn = false;
 				//InstantiateHitVine(prefabToSpawnCave1, pos, rot);
 				hit.transform.gameObject.GetComponent(SpawnPrefabSimple).SpawnPrefab();
+				readyToSpawn = true;
 				}					
 			//else if (hit.collider.gameObject.CompareTag ("Stalact")) {
 				// retract stalactites or stalagmites... or only when shot?
