@@ -23,6 +23,8 @@ function Update ()
        else if ( Input.GetButton("Fire2") && Time.time > nextFire)
        {
          nextFire = Time.time + fireRate;
+         //Instantiate(projectilePrefab2, fp1.transform.position, fp1.transform.rotation);
+         //disabling freeze ray mechanic - TK
          Instantiate(projectilePrefab2, fp1.transform.position, fp1.transform.rotation);
  
        }
