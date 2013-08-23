@@ -101,14 +101,9 @@ function OnCollisionEnter (collision : Collision) {
 function OnTriggerEnter (other : Collider) {
 
 	if (other.gameObject && other.gameObject.CompareTag ("Player")) {
-		if (Globals.doneWaiting == false) {
-			Destroy(other.gameObject);
-			if (audioDing) {audioDing.Play();}
-		}
-		else {
+		if (Globals.doneWaiting == true) {
 			if (audioHit) {audioHit.Play();}
 			Globals.doneWaiting = false;
-			Destroy(other.gameObject);
 			FadeFogColor(FogColorFadeTime, FadeDir.In);
 			yield FadeFogDist(FogDistFadeTime, FadeDir.In);
 			FadeFogColor(FogColorFadeTime/2, FadeDir.Out);
