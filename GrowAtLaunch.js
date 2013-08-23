@@ -1,8 +1,10 @@
 ﻿#pragma strict
 var timer : float = 2;
+var addColliderAfter : boolean = false;
 
 function Start () {
-	growMe(timer);
+	if (addColliderAfter) {yield growMe(timer); collider.enabled = true;};
+	else {growMe(timer);}
 }
 
 function Update () {
