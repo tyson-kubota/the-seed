@@ -72,12 +72,19 @@ function Update () {
 			if (hit.collider.gameObject.CompareTag ("Water")) {
 				readyToSpawn = false;
 				InstantiateHitCrystal(prefabToSpawnCrystal1, pos, rot);
-				// put water sheet/slab spawn here
 				}
 			else if (hit.collider.gameObject.CompareTag ("Cave")) {
 				readyToSpawn = false;
 				InstantiateHitCave(prefabToSpawnCave1, pos, rot);
 				}				
+			else if (hit.collider.gameObject.CompareTag ("VineRoot")) {
+				readyToSpawn = false;
+				//InstantiateHitVine(prefabToSpawnCave1, pos, rot);
+				hit.transform.gameObject.GetComponent(SpawnPrefabSimple).SpawnPrefab();
+				}					
+			//else if (hit.collider.gameObject.CompareTag ("Stalact")) {
+				// retract stalactites or stalagmites... or only when shot?
+				//}				
 			else if (hit.collider.gameObject.CompareTag ("Terrain")) {
 				readyToSpawn = false;
 				InstantiateHitObject(prefabToSpawnGrass1, pos, rot);

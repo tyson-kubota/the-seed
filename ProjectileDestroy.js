@@ -8,6 +8,7 @@ var myObjectHolder : GameObject;
 var myObject : GameObject;
 
 var shotRenderer : MeshRenderer;
+var lightRenderer : Light;
 var audioDing : AudioSource;
 
 function Start () {
@@ -24,9 +25,10 @@ function OnCollisionEnter (collision : Collision) {
   	collision.gameObject.rigidbody.isKinematic = false;
   }
   
-  if (collision.gameObject.CompareTag ("Terrain")) {
+  if (collision.gameObject.CompareTag ("Terrain") || collision.gameObject.CompareTag ("Cave")) {
 	if (audioDing) {audioDing.Play();}
 	if (shotRenderer) {shotRenderer.enabled = false;}
+	if (lightRenderer) {lightRenderer.enabled = false;}
 	Destroy(myObject, 1);
   }
   
