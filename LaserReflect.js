@@ -29,7 +29,7 @@ function Start () {
 	rayTargetLight = rayTargetObj.transform.FindChild("Mesh").light;
 	layerMask1 = Globals.myPlayerLayer.value;
 	layerMask2 = Globals.laserLayer.value;
-	finalMask = ~((1 << Globals.myPlayerLayer.value) | (1 << Globals.laserLayer.value));
+	finalMask = ~((1 << Globals.myPlayerLayer.value) | (1 << Globals.laserLayer.value) | (1 << Globals.vineRootLayer.value) | (1 << Globals.triggerLayer.value));
 }
 
 function Update () {
@@ -80,7 +80,6 @@ function Update () {
 			else if (hit.collider.gameObject.CompareTag ("VineRoot")) {
 				//readyToSpawn = false;
 				//SpawnPrefabOnHit(hit);
-				rayTargetObj.SetActive(false);rayTargetLight.range = .5;
 				}					
 			//else if (hit.collider.gameObject.CompareTag ("Stalact")) {
 				// retract stalactites or stalagmites... or only when shot?

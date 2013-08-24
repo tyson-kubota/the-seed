@@ -8,6 +8,8 @@ static var hitDistance : float = 20.0f;
 static var myPlayerLayer : LayerMask = 11;
 static var laserLayer : LayerMask = 13;
 static var waterLayer : LayerMask;
+static var vineRootLayer : LayerMask;
+static var triggerLayer : LayerMask;
 static var introComplete : boolean = false;
 
 var normalPlayerCamera : GameObject;
@@ -25,6 +27,8 @@ function Start () {
 	myPlayerLayer = LayerMask.NameToLayer("MyPlayerLayer");
 	laserLayer = LayerMask.NameToLayer("LaserBlast");
 	waterLayer = LayerMask.NameToLayer("Water");
+	vineRootLayer = LayerMask.NameToLayer("VineRootLayer");
+	triggerLayer = LayerMask.NameToLayer("TriggerOnly");
 	
 	if (OVRDevice.SensorCount > 0) {
     	normalPlayer.SetActive(false);
