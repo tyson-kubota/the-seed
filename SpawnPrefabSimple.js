@@ -13,10 +13,9 @@ function Start () {
 	originTransform = transform;
 }
 
-function OnCollisionEnter (collision : Collision) {
+function OnTriggerEnter (other : Collider) {
 
-	if (collision.gameObject.CompareTag ("Laser") && doneWaiting == true) {
-		Destroy(collision.gameObject);
+	if (other.gameObject.CompareTag ("Player") && doneWaiting == true) {
 		SpawnPrefab();
 		if (myLight) {myLight.range = (myLight.range * 2); myLight.intensity = (myLight.intensity * 2);}
 	}

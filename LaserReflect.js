@@ -78,10 +78,8 @@ function Update () {
 				InstantiateHitCave(prefabToSpawnCave1, pos, rot);
 				}				
 			else if (hit.collider.gameObject.CompareTag ("VineRoot")) {
-				readyToSpawn = false;
-				//InstantiateHitVine(prefabToSpawnCave1, pos, rot);
-				hit.transform.gameObject.GetComponent(SpawnPrefabSimple).SpawnPrefab();
-				readyToSpawn = true;
+				//readyToSpawn = false;
+				//SpawnPrefabOnHit(hit);
 				}					
 			//else if (hit.collider.gameObject.CompareTag ("Stalact")) {
 				// retract stalactites or stalagmites... or only when shot?
@@ -98,6 +96,15 @@ function Update () {
 		
 		if (pos == Vector3.zero) {rayTargetObj.SetActive(false);rayTargetLight.range = .5;}	
 	}
+}
+
+function SpawnPrefabOnHit (hit: RaycastHit) {
+	if (!readyToSpawn) {
+		hit.transform.gameObject.GetComponent(SpawnPrefabSimple).SpawnPrefab();
+		yield WaitForSeconds(.75f);
+		readyToSpawn = true;
+	}
+	else {return;}
 }
 
 function InstantiateHitObject(prefabToSpawnGrass1 : GameObject, pos: Vector3, rot : Quaternion) {
