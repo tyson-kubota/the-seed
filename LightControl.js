@@ -5,6 +5,10 @@ var blinkTimer : float = 5;
 var blinkOffset : float = 1;
 var startRange : float = 20;
 var maxRange : float = 300;
+
+var minIntensity : float = 2;
+var maxIntensity : float = 8;
+
 var myLightLerpDown : boolean = false;
 var myLightLerpUp : boolean = false;
 private var shouldLerp : boolean = false;
@@ -44,6 +48,8 @@ function LerpLightUp (timer : float) {
 	Debug.Log("started lerp light up");    
 	var start = startRange;
     var end = maxRange;
+    var startIntensity = minIntensity;
+    var endIntensity = maxIntensity;
     var i = 0.0;
     var step = 1.0/timer;
 	
@@ -53,8 +59,8 @@ function LerpLightUp (timer : float) {
         i += step * Time.deltaTime;
         if (controlsRange) {
         myLight.range = Mathf.Lerp(start, end, i);}
-        else if (controlsIntensity) {
-        myLight.intensity = Mathf.Lerp(start, end, i);}
+        if (controlsIntensity) {
+        myLight.intensity = Mathf.Lerp(startIntensity, endIntensity, i);}
 		yield;
     	}
     yield WaitForSeconds (timer); 
@@ -64,6 +70,8 @@ function LerpLightDown (timer : float) {
 	Debug.Log("started lerp light down");    
 	var start = maxRange;
     var end = startRange;
+    var startIntensity = maxIntensity;
+    var endIntensity = minIntensity;
     var i = 0.0;
     var step = 1.0/timer;
 	
@@ -73,8 +81,8 @@ function LerpLightDown (timer : float) {
         i += step * Time.deltaTime;
         if (controlsRange) {
         myLight.range = Mathf.Lerp(start, end, i);}
-        else if (controlsIntensity) {
-        myLight.intensity = Mathf.Lerp(start, end, i);}
+        if (controlsIntensity) {
+        myLight.intensity = Mathf.Lerp(startIntensity, endIntensity, i);}
 		yield;
     	}
     yield WaitForSeconds (timer);
