@@ -80,6 +80,7 @@ function Update () {
 			else if (hit.collider.gameObject.CompareTag ("VineRoot")) {
 				//readyToSpawn = false;
 				//SpawnPrefabOnHit(hit);
+				rayTargetObj.SetActive(false);rayTargetLight.range = .5;
 				}					
 			//else if (hit.collider.gameObject.CompareTag ("Stalact")) {
 				// retract stalactites or stalagmites... or only when shot?
