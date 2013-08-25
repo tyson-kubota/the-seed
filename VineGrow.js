@@ -27,7 +27,7 @@ function Start () {
     var randomRotation = Quaternion.Euler( Random.Range(-randomRotX, randomRotX), Random.Range(-30, 40), Random.Range(-30, 30));
 
     //use totalLength to keep vines from growing indefinitely
-    var totalLength : int = Random.Range(0,8);
+    var totalLength : int = Random.Range(0,10);
     if (totalLength > 0) { 
         var spawnedPrefabT : GameObject = Instantiate(prefabToSpawn, randomPosition, randomRotation);
      	spawnedPrefabT.transform.parent = originTransform;
