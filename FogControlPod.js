@@ -6,6 +6,9 @@ var addFogColor : Color;
 var FogColorFadeTime : float = 8;
 var FogDistFadeTime : float = 5;
 
+var originTransform : Transform; 
+var explosionPrefab : GameObject;
+
 var useAudio : boolean = false;
 var audioHit : AudioSource;
 var audioDing : AudioSource;
@@ -15,6 +18,7 @@ var audioDing : AudioSource;
 //enum FadeDir {In, Out}
 
 function Start () {
+	originTransform = transform;
 }
 
 function Update () {
@@ -68,5 +72,15 @@ function OnCollisionEnter (collision : Collision) {
 			Globals.doneWaiting = true;
 		}
 	}
-
+	
+	else if (collision.gameObject && collision.gameObject.CompareTag ("Terrain")) {
+		//Debug.Log("time to explode");
+		var pos : Vector3 = originTransform.position;
+		var randomRotY : int = Random.Range(0, 160);
+    	var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
+		Instantiate(explosionPrefab, pos, randomRotation);
+		yield FadeFogDist(FogDistFadeTime, FadeDir.In);
+		Globals.doneWaiting = true;		
+		Destroy(originTransform.gameObject,0);
+	}
 }
