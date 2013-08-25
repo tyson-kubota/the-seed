@@ -138,7 +138,7 @@ function InstantiateHitCrystal(prefabToSpawn : GameObject, pos: Vector3, rot : Q
 	else {prefabToUse = prefabToSpawnCrystal3;}
 
 	var randomRotY : int = Random.Range(0, 160);
-    var randomRotation = Quaternion.Euler( Random.Range(-20, 20), Random.Range(-randomRotY, randomRotY), Random.Range(-30, 30));
+    var randomRotation = Quaternion.Euler( Random.Range(-5, 5), Random.Range(-randomRotY, randomRotY), Random.Range(-5, 5));
 
 	Instantiate(prefabToUse, pos, randomRotation);
 	//rayTargetLight.color = Color.white;
